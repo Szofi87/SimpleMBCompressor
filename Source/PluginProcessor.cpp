@@ -34,7 +34,7 @@ SimpleMBCompAudioProcessor::SimpleMBCompAudioProcessor()
     ratio = dynamic_cast<juce::AudioParameterChoice*>(apvts.getParameter("Ratio"));
     jassert(ratio != nullptr);
 
-    bypassed = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("Bypessed"));
+    bypassed = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("Bypassed"));
     jassert(bypassed != nullptr);
 
 }
