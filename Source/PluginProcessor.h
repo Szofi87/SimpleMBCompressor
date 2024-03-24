@@ -8,6 +8,20 @@
 
 #pragma once
 
+/*
+ DSP Roadmap
+ 1) figure out how to split the audio into 3 bands DONE
+ 2) create parameters to control where this split happens. DONE
+ 3) prove that splitting into 3 bands produces no audible artifacts DONE
+ 4) create audio parameters for the 3 compressor bands. these need to live on each band instance. DONE
+ 5) add 2 remaining compressors. DONE
+ 6) add ability to mute/solo/bypass individual compressors DONE
+ 7) add input and output gain to offset changes in output level
+ 8) clean up anything that needs cleaning up.
+
+
+ */
+
 #include <JuceHeader.h>
 
 namespace Params
@@ -44,7 +58,6 @@ namespace Params
         Solo_Low_Band,
         Solo_Mid_Band,
         Solo_High_Band,
-
     };
 
     inline const std::map<Names, juce::String>& GetParams()
@@ -52,35 +65,30 @@ namespace Params
         static std::map<Names, juce::String> params =
         {
             {Low_Mid_Crossover_Freq, "Low-Mid Crossover Freq"},
-            {Mid_High_Crossover_Freq,"Mid-High Crossover Freq"},
+            {Mid_High_Crossover_Freq,"Mid_High Crossover Freq"},
+            {Threshold_Low_Band,"Threshold Low Band"},
+            {Threshold_Mid_Band,"Threshold Mid Band"},
+            {Threshold_High_Band,"Threshold High Band"},
+            {Attack_Low_Band,"Attack Low Band"},
+            {Attack_Mid_Band,"Attack Mid Band"},
+            {Attack_High_Band,"Attack High Band"},
+            {Release_Low_Band,"Release Low Band"},
+            {Release_Mid_Band,"Release Mid Band"},
+            {Release_High_Band,"Release High Band"},
+            {Ratio_Low_Band,"Ratio Low Band"},
+            {Ratio_Mid_Band,"Ratio Mid Band"},
+            {Ratio_High_Band,"Ratio High Band"},
+            {Bypassed_Low_Band,"Bypassed Low Band"},
+            {Bypassed_Mid_Band,"Bypassed Mid Band"},
+            {Bypassed_High_Band,"Bypassed High Band"},
 
-            {Threshold_Low_Band, "Threshold Low Band"},
-            {Threshold_Mid_Band, "Threshold Mid Band"},
-            {Threshold_High_Band, "Threshold High Band"},
+            {Mute_Low_Band,"Mute Low Band"},
+            {Mute_Mid_Band,"Mute Mid Band"},
+            {Mute_High_Band,"Mute High Band"},
 
-            {Attack_Low_Band, "Attack Low Band"},
-            {Attack_Mid_Band, "Attack Mid Band"},
-            {Attack_High_Band, "Attack High Band"},
-
-            {Release_Low_Band, "Release Low Band"},
-            {Release_Mid_Band, "Release Mid Band"},
-            {Release_High_Band, "Release High Band"},
-
-            {Ratio_Low_Band, "Ratio Low Band"},
-            {Ratio_Mid_Band, "Ratio Mid Band"},
-            {Ratio_High_Band, "Ratio High Band"},
-
-            {Bypassed_Low_Band, "Bypassed Low Band"},
-            {Bypassed_Mid_Band, "Bypassed Mid Band"},
-            {Bypassed_High_Band, "Bypassed High Band"},
-
-            {Mute_Low_Band, "Mute Low Band"},
-            {Mute_Mid_Band, "Mute Mid Band"},
-            {Mute_High_Band, "Mute High Band"},
-
-            {Solo_Low_Band, "Solo Low Band"},
-            {Solo_Mid_Band, "Solo Mid Band"},
-            {Solo_High_Band, "Solo High Band"},
+            {Solo_Low_Band,"Solo Low Band"},
+            {Solo_Mid_Band,"Solo Mid Band"},
+            {Solo_High_Band,"Solo High Band"},
         };
 
         return params;
@@ -97,19 +105,18 @@ struct CompressorBand
     juce::AudioParameterBool* mute{ nullptr };
     juce::AudioParameterBool* solo{ nullptr };
 
-
     void prepare(const juce::dsp::ProcessSpec& spec)
     {
         compressor.prepare(spec);
     }
 
     void updateCompressorSettings()
-        {
+    {
         compressor.setAttack(attack->get());
         compressor.setRelease(release->get());
         compressor.setThreshold(threshold->get());
         compressor.setRatio(ratio->getCurrentChoiceName().getFloatValue());
-        }
+    }
 
     void process(juce::AudioBuffer<float>& buffer)
     {
@@ -120,16 +127,14 @@ struct CompressorBand
 
         compressor.process(context);
     }
-    
 private:
     juce::dsp::Compressor<float> compressor;
-
 };
 
 //==============================================================================
 /**
 */
-class SimpleMBCompAudioProcessor  : public juce::AudioProcessor
+class SimpleMBCompAudioProcessor : public juce::AudioProcessor
 {
 public:
     //==============================================================================
@@ -137,14 +142,14 @@ public:
     ~SimpleMBCompAudioProcessor() override;
 
     //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+#ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
+#endif
 
-    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+    void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -161,22 +166,19 @@ public:
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const juce::String getProgramName (int index) override;
-    void changeProgramName (int index, const juce::String& newName) override;
+    void setCurrentProgram(int index) override;
+    const juce::String getProgramName(int index) override;
+    void changeProgramName(int index, const juce::String& newName) override;
 
     //==============================================================================
-    void getStateInformation (juce::MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
+    void getStateInformation(juce::MemoryBlock& destData) override;
+    void setStateInformation(const void* data, int sizeInBytes) override;
 
     using APVTS = juce::AudioProcessorValueTreeState;
     static APVTS::ParameterLayout createParameterLayout();
 
-    APVTS apvts{ *this, nullptr, "Parameters",
-        createParameterLayout() };
+    APVTS apvts{ *this, nullptr, "Parameters", createParameterLayout() };
 private:
-
-    
     std::array<CompressorBand, 3> compressors;
     CompressorBand& lowBandComp = compressors[0];
     CompressorBand& midBandComp = compressors[1];
@@ -186,16 +188,16 @@ private:
     using Filter = juce::dsp::LinkwitzRileyFilter<float>;
     //      fc0     fc1
     Filter  LP1, AP2,
-            HP1, LP2,
-            HP2;
+        HP1, LP2,
+        HP2;
 
-   /* Filter invAP1, invAP2;
-    juce::AudioBuffer<float> invAPBuffer;*/
+    //    Filter invAP1, invAP2;
+    //    juce::AudioBuffer<float> invAPBuffer;
 
     juce::AudioParameterFloat* lowMidCrossover{ nullptr };
     juce::AudioParameterFloat* midHighCrossover{ nullptr };
 
     std::array<juce::AudioBuffer<float>, 3> filterBuffers;
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleMBCompAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleMBCompAudioProcessor)
 };

@@ -14,14 +14,14 @@
 //==============================================================================
 /**
 */
-class SimpleMBCompAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SimpleMBCompAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    SimpleMBCompAudioProcessorEditor (SimpleMBCompAudioProcessor&);
+    SimpleMBCompAudioProcessorEditor(SimpleMBCompAudioProcessor&);
     ~SimpleMBCompAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
 private:
@@ -29,5 +29,5 @@ private:
     // access the processor object that created it.
     SimpleMBCompAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleMBCompAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleMBCompAudioProcessorEditor)
 };
