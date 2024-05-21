@@ -180,10 +180,6 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
     g.setColour(Colours::blueviolet);
     g.drawFittedText(getName(), bounds.removeFromTop(getTextHeight() + 2), Justification::centredBottom, 1);
 
-    //    g.setColour(Colours::red);
-    //    g.drawRect(getLocalBounds());
-    //    g.setColour(Colours::yellow);
-    //    g.drawRect(sliderBounds);
 
     getLookAndFeel().drawRotarySlider(g,
         sliderBounds.getX(),
@@ -254,11 +250,7 @@ juce::String RotarySliderWithLabels::getDisplayString() const
     {
         float val = getValue();
 
-        //if (val > 999.f)
-        //{
-        //    val /= 1000.f; //1001 / 1000 = 1.001
-        //    addK = true;
-        //}
+        
 
         addK = truncateKiloValue(val);
         str = juce::String(val, (addK ? 2 : 0));
@@ -312,38 +304,7 @@ CompressorBandControls::CompressorBandControls(juce::AudioProcessorValueTreeStat
     thresholdSlider(nullptr, "dB", "THRESH"),
     ratioSlider(nullptr, "")
 {   
-    /*using namespace Params;
-    const auto& params = GetParams();*/
-
-   /* auto getParamHelper = [&params, &apvts = this->apvts](const auto& name) -> auto&
-        {
-            return getParam(apvts, params, name);
-        };*/
-
-   /* attackSlider.changeParam(&getParamHelper(Names::Attack_Mid_Band));
-    releaseSlider.changeParam(&getParamHelper(Names::Release_Mid_Band));
-    thresholdSlider.changeParam(&getParamHelper(Names::Threshold_Mid_Band));
-    ratioSlider.changeParam(&getParamHelper(Names::Ratio_Mid_Band));
-
-    addLabelPairs(attackSlider.labels, getParamHelper(Names::Attack_Mid_Band), "ms");
-    addLabelPairs(releaseSlider.labels, getParamHelper(Names::Release_Mid_Band), "ms");
-    addLabelPairs(thresholdSlider.labels, getParamHelper(Names::Threshold_Mid_Band), "dB");
    
-    ratioSlider.labels.clear();
-    ratioSlider.labels.add({0.f, "1:1"});
-    auto ratioParam = dynamic_cast<juce::AudioParameterChoice*>(&getParamHelper(Names::Ratio_Mid_Band));
-    ratioSlider.labels.add({ 1.f, 
-        juce::String(ratioParam->choices.getReference(ratioParam->choices.size()-1).getIntValue()) + ":1"});*/
-
-    //auto makeAttachmentHelper = [&params, &apvts = this->apvts](auto& attachment, const auto& name, auto& slider)
-    //    {
-    //        makeAttachment(attachment, apvts, params, name, slider);
-    //    };
-
-    /*makeAttachmentHelper(attackSliderAttachment, Names::Attack_Mid_Band, attackSlider);
-    makeAttachmentHelper(releaseSliderAttachment, Names::Release_Mid_Band, releaseSlider);
-    makeAttachmentHelper(thresholdSliderAttachment, Names::Threshold_Mid_Band, thresholdSlider);
-    makeAttachmentHelper(ratioSliderAttachment, Names::Ratio_Mid_Band, ratioSlider);*/
 
     addAndMakeVisible(attackSlider);
     addAndMakeVisible(releaseSlider);
@@ -359,9 +320,7 @@ CompressorBandControls::CompressorBandControls(juce::AudioProcessorValueTreeStat
     addAndMakeVisible(soloButton);
     addAndMakeVisible(muteButton);
 
-    /*makeAttachmentHelper(bypassButtonAttachment, Names::Bypass_Mid_Band, bypassButton);
-    makeAttachmentHelper(soloButtonAttachment, Names::Solo_Mid_Band, soloButton);
-    makeAttachmentHelper(muteButtonAttachment, Names::Mute_Mid_Band, muteButton);*/
+    
 
     lowBand.setName("Low");
     midBand.setName("Mid");
@@ -425,9 +384,7 @@ void CompressorBandControls::resized()
     flexBox.flexWrap = FlexBox::Wrap::noWrap;
 
     auto spacer = FlexItem().withWidth(4);
-  //  auto endCap = FlexItem().withWidth(6);
-
-    //flexBox.items.add(endCap);
+  
     flexBox.items.add(spacer);
     flexBox.items.add(FlexItem(bandSelectControlBox).withWidth(50));
     flexBox.items.add(spacer);
@@ -438,7 +395,6 @@ void CompressorBandControls::resized()
     flexBox.items.add(FlexItem(thresholdSlider).withFlex(1.f));
     flexBox.items.add(spacer);
     flexBox.items.add(FlexItem(ratioSlider).withFlex(1.f));
-    //flexBox.items.add(endCap);
     flexBox.items.add(spacer);
     flexBox.items.add(FlexItem(bandButtonControlBox).withWidth(30));
     flexBox.performLayout(bounds);
