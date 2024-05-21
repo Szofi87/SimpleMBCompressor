@@ -51,9 +51,9 @@ SimpleMBCompAudioProcessor::SimpleMBCompAudioProcessor()
             jassert(param != nullptr);
         };
 
-    boolHelper(lowBandComp.bypassed, Names::Bypassed_Low_Band);
-    boolHelper(midBandComp.bypassed, Names::Bypassed_Mid_Band);
-    boolHelper(highBandComp.bypassed, Names::Bypassed_High_Band);
+    boolHelper(lowBandComp.bypass, Names::Bypass_Low_Band);
+    boolHelper(midBandComp.bypass, Names::Bypass_Mid_Band);
+    boolHelper(highBandComp.bypass, Names::Bypass_High_Band);
 
     boolHelper(lowBandComp.mute, Names::Mute_Low_Band);
     boolHelper(midBandComp.mute, Names::Mute_Mid_Band);
@@ -438,14 +438,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleMBCompAudioProcessor::
         sa,
         3));
 
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_Low_Band),
-        params.at(Names::Bypassed_Low_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_Low_Band),
+        params.at(Names::Bypass_Low_Band),
         false));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_Mid_Band),
-        params.at(Names::Bypassed_Mid_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_Mid_Band),
+        params.at(Names::Bypass_Mid_Band),
         false));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_High_Band),
-        params.at(Names::Bypassed_High_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_High_Band),
+        params.at(Names::Bypass_High_Band),
         false));
 
     layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Mute_Low_Band),

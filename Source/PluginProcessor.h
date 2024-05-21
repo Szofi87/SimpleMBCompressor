@@ -34,9 +34,9 @@ namespace Params
         Ratio_Mid_Band,
         Ratio_High_Band,
 
-        Bypassed_Low_Band,
-        Bypassed_Mid_Band,
-        Bypassed_High_Band,
+        Bypass_Low_Band,
+        Bypass_Mid_Band,
+        Bypass_High_Band,
 
         Mute_Low_Band,
         Mute_Mid_Band,
@@ -68,9 +68,9 @@ namespace Params
             {Ratio_Low_Band,"Ratio Low Band"},
             {Ratio_Mid_Band,"Ratio Mid Band"},
             {Ratio_High_Band,"Ratio High Band"},
-            {Bypassed_Low_Band,"Bypassed Low Band"},
-            {Bypassed_Mid_Band,"Bypassed Mid Band"},
-            {Bypassed_High_Band,"Bypassed High Band"},
+            {Bypass_Low_Band,"Bypass Low Band"},
+            {Bypass_Mid_Band,"Bypass Mid Band"},
+            {Bypass_High_Band,"Bypass High Band"},
 
             {Mute_Low_Band,"Mute Low Band"},
             {Mute_Mid_Band,"Mute Mid Band"},
@@ -94,7 +94,7 @@ struct CompressorBand
     juce::AudioParameterFloat* release{ nullptr };
     juce::AudioParameterFloat* threshold{ nullptr };
     juce::AudioParameterChoice* ratio{ nullptr };
-    juce::AudioParameterBool* bypassed{ nullptr };
+    juce::AudioParameterBool* bypass{ nullptr };
     juce::AudioParameterBool* mute{ nullptr };
     juce::AudioParameterBool* solo{ nullptr };
 
@@ -116,7 +116,7 @@ struct CompressorBand
         auto block = juce::dsp::AudioBlock<float>(buffer);
         auto context = juce::dsp::ProcessContextReplacing<float>(block);
 
-        context.isBypassed = bypassed->get();
+        context.isBypassed = bypass->get();
 
         compressor.process(context);
     }
