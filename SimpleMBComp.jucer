@@ -4,6 +4,39 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="szofi.reteinagy">
   <MAINGROUP id="GkkTeH" name="SimpleMBComp">
     <GROUP id="{D5569757-2507-26D4-DBB1-14EF62A69174}" name="Source">
+      <GROUP id="{D00CFED2-FFC0-DC85-23F6-55380E7AF7AF}" name="GUI">
+        <FILE id="I4ML7i" name="UtilityComponents.cpp" compile="1" resource="0"
+              file="Source/UtilityComponents.cpp"/>
+        <FILE id="SWbKW2" name="UtilityComponents.h" compile="0" resource="0"
+              file="Source/UtilityComponents.h"/>
+        <FILE id="Iemuin" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+        <FILE id="EA4w6D" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
+        <FILE id="WpVLNk" name="GlobalControls.cpp" compile="1" resource="0"
+              file="Source/GlobalControls.cpp"/>
+        <FILE id="d7ty8O" name="GlobalControls.h" compile="0" resource="0"
+              file="Source/GlobalControls.h"/>
+        <FILE id="uq4HeV" name="CustomButtons.cpp" compile="1" resource="0"
+              file="Source/CustomButtons.cpp"/>
+        <FILE id="L0s4NT" name="CustomButtons.h" compile="0" resource="0" file="Source/CustomButtons.h"/>
+        <FILE id="ux2LGG" name="CompressorBandControls.cpp" compile="1" resource="0"
+              file="Source/CompressorBandControls.cpp"/>
+        <FILE id="H3SBXJ" name="CompressorBandControls.h" compile="0" resource="0"
+              file="Source/CompressorBandControls.h"/>
+        <FILE id="gQqLku" name="RotarySliderWithLabels.cpp" compile="1" resource="0"
+              file="Source/RotarySliderWithLabels.cpp"/>
+        <FILE id="Q7mcH6" name="RotarySliderWithLabels.h" compile="0" resource="0"
+              file="Source/RotarySliderWithLabels.h"/>
+        <FILE id="NGzKjr" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
+        <FILE id="wRUOvt" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
+      </GROUP>
+      <GROUP id="{DAA0189A-59BE-9D9D-30DE-1DCB0A42555F}" name="DSP">
+        <FILE id="eIdvNr" name="CompressorBand.cpp" compile="1" resource="0"
+              file="Source/CompressorBand.cpp"/>
+        <FILE id="a0w0dj" name="CompressorBand.h" compile="0" resource="0"
+              file="Source/CompressorBand.h"/>
+        <FILE id="wqLpl3" name="Params.cpp" compile="1" resource="0" file="Source/Params.cpp"/>
+        <FILE id="F9horJ" name="Params.h" compile="0" resource="0" file="Source/Params.h"/>
+      </GROUP>
       <FILE id="Bz7VQA" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="uOyMNh" name="PluginProcessor.h" compile="0" resource="0"

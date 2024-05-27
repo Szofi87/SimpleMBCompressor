@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Source"
+    "\\Source",
+    "\\Source\\DSP",
+    "\\Source\\GUI"
   ],
-  "SelectedNode": "\\Source\\PluginEditor.cpp",
+  "SelectedNode": "\\Source\\PluginEditor.h",
   "PreviewInSolutionExplorer": true
 }

@@ -1,5 +1,14 @@
+/*
+  ==============================================================================
+
+    This file contains the basic framework code for a JUCE plugin processor.
+
+  ==============================================================================
+*/
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "DSP/Params.h"
 
 //==============================================================================
 SimpleMBCompAudioProcessor::SimpleMBCompAudioProcessor()
@@ -51,9 +60,9 @@ SimpleMBCompAudioProcessor::SimpleMBCompAudioProcessor()
             jassert(param != nullptr);
         };
 
-    boolHelper(lowBandComp.bypass, Names::Bypass_Low_Band);
-    boolHelper(midBandComp.bypass, Names::Bypass_Mid_Band);
-    boolHelper(highBandComp.bypass, Names::Bypass_High_Band);
+    boolHelper(lowBandComp.bypassed, Names::Bypassed_Low_Band);
+    boolHelper(midBandComp.bypassed, Names::Bypassed_Mid_Band);
+    boolHelper(highBandComp.bypassed, Names::Bypassed_High_Band);
 
     boolHelper(lowBandComp.mute, Names::Mute_Low_Band);
     boolHelper(midBandComp.mute, Names::Mute_Mid_Band);
@@ -77,7 +86,8 @@ SimpleMBCompAudioProcessor::SimpleMBCompAudioProcessor()
     LP2.setType(juce::dsp::LinkwitzRileyFilterType::lowpass);
     HP2.setType(juce::dsp::LinkwitzRileyFilterType::highpass);
 
-    
+    //    invAP1.setType(juce::dsp::LinkwitzRileyFilterType::allpass);
+    //    invAP2.setType(juce::dsp::LinkwitzRileyFilterType::allpass);
 }
 
 SimpleMBCompAudioProcessor::~SimpleMBCompAudioProcessor()
@@ -168,10 +178,15 @@ void SimpleMBCompAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
     LP2.prepare(spec);
     HP2.prepare(spec);
 
+    //    invAP1.prepare(spec);
+    //    invAP2.prepare(spec);
+    //
+    //    invAPBuffer.setSize(spec.numChannels, samplesPerBlock);
+
     inputGain.prepare(spec);
     outputGain.prepare(spec);
 
-    inputGain.setRampDurationSeconds(0.05);
+    inputGain.setRampDurationSeconds(0.05); //50 ms
     outputGain.setRampDurationSeconds(0.05);
 
     for (auto& buffer : filterBuffers)
@@ -183,7 +198,8 @@ void SimpleMBCompAudioProcessor::prepareToPlay(double sampleRate, int samplesPer
 
 void SimpleMBCompAudioProcessor::releaseResources()
 {
-    
+    // When playback stops, you can use this as an opportunity to free up any
+    // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -193,12 +209,15 @@ bool SimpleMBCompAudioProcessor::isBusesLayoutSupported(const BusesLayout& layou
     juce::ignoreUnused(layouts);
     return true;
 #else
-   
+    // This is the place where you check if the layout is supported.
+    // In this template code we only support mono or stereo.
+    // Some plugin hosts, such as certain GarageBand versions, will only
+    // load plugins that support stereo bus layouts.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
         && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
-    
+    // This checks if the input layout matches the output layout
 #if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
@@ -225,7 +244,6 @@ void SimpleMBCompAudioProcessor::updateState()
 
     inputGain.setGainDecibels(inputGainParam->get());
     outputGain.setGainDecibels(outputGainParam->get());
-
 }
 
 void SimpleMBCompAudioProcessor::splitBands(const juce::AudioBuffer<float>& inputBuffer)
@@ -259,7 +277,12 @@ void SimpleMBCompAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, 
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-
+    // In case we have more outputs than inputs, this code clears any output
+    // channels that didn't contain input data, (because these aren't
+    // guaranteed to be empty - they may contain garbage).
+    // This is here to avoid people getting screaming feedback
+    // when they first compile a plugin, but obviously you don't need to keep
+    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
@@ -297,7 +320,6 @@ void SimpleMBCompAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, 
         }
     }
 
-
     if (bandsAreSoloed)
     {
         for (size_t i = 0; i < compressors.size(); ++i)
@@ -333,8 +355,8 @@ bool SimpleMBCompAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* SimpleMBCompAudioProcessor::createEditor()
 {
-      return new SimpleMBCompAudioProcessorEditor (*this);
-    //return new juce::GenericAudioProcessorEditor(*this);
+    return new SimpleMBCompAudioProcessorEditor(*this);
+    //    return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -438,14 +460,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleMBCompAudioProcessor::
         sa,
         3));
 
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_Low_Band),
-        params.at(Names::Bypass_Low_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_Low_Band),
+        params.at(Names::Bypassed_Low_Band),
         false));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_Mid_Band),
-        params.at(Names::Bypass_Mid_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_Mid_Band),
+        params.at(Names::Bypassed_Mid_Band),
         false));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypass_High_Band),
-        params.at(Names::Bypass_High_Band),
+    layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Bypassed_High_Band),
+        params.at(Names::Bypassed_High_Band),
         false));
 
     layout.add(std::make_unique<AudioParameterBool>(params.at(Names::Mute_Low_Band),
