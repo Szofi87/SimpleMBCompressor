@@ -1,3 +1,13 @@
+/*
+  ==============================================================================
+
+    PluginProcessor.cpp
+    Created: 28 May 2024 11:35:31pm
+    Author:  admin
+
+  ==============================================================================
+*/
+
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "DSP/Params.h"

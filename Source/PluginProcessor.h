@@ -1,7 +1,9 @@
 /*
   ==============================================================================
 
-    This file contains the basic framework code for a JUCE plugin processor.
+    PluginProcessor.h
+    Created: 28 May 2024 11:35:31pm
+    Author:  admin
 
   ==============================================================================
 */
@@ -137,3 +139,4 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleMBCompAudioProcessor)
 };
+
