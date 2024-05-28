@@ -4,8 +4,17 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="szofi.reteinagy">
   <MAINGROUP id="GkkTeH" name="SimpleMBComp">
     <GROUP id="{D5569757-2507-26D4-DBB1-14EF62A69174}" name="Source">
-      <GROUP id="{2D8145A9-EF71-C746-4195-0EDA7BF0EBED}" name="GUI"/>
-      <GROUP id="{94BB2409-5C11-5A48-8FB6-F00F1D809B8D}" name="DSP"/>
+      <GROUP id="{D571EDC0-216C-454F-E588-922ADCF652D8}" name="DSP">
+        <FILE id="dapi7S" name="SingleChannelSampleFifo.h" compile="0" resource="0"
+              file="Source/SingleChannelSampleFifo.h"/>
+        <FILE id="VtREnw" name="Fifo.h" compile="0" resource="0" file="Source/Fifo.h"/>
+        <FILE id="IBkxpG" name="Params.cpp" compile="1" resource="0" file="Source/Params.cpp"/>
+        <FILE id="r6C0VB" name="Params.h" compile="0" resource="0" file="Source/Params.h"/>
+        <FILE id="b58EQM" name="CompressorBand.cpp" compile="1" resource="0"
+              file="Source/CompressorBand.cpp"/>
+        <FILE id="JeVReO" name="CompressorBand.h" compile="0" resource="0"
+              file="Source/CompressorBand.h"/>
+      </GROUP>
       <FILE id="Bz7VQA" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="uOyMNh" name="PluginProcessor.h" compile="0" resource="0"
