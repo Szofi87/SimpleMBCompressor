@@ -4,6 +4,42 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="szofi.reteinagy">
   <MAINGROUP id="GkkTeH" name="SimpleMBComp">
     <GROUP id="{D5569757-2507-26D4-DBB1-14EF62A69174}" name="Source">
+      <GROUP id="{2D8145A9-EF71-C746-4195-0EDA7BF0EBED}" name="GUI">
+        <FILE id="oacKPs" name="AnalyzerPathGenerator.h" compile="0" resource="0"
+              file="Source/AnalyzerPathGenerator.h"/>
+        <FILE id="f5lXZa" name="CompressorBandControls.cpp" compile="1" resource="0"
+              file="Source/CompressorBandControls.cpp"/>
+        <FILE id="CVsqB6" name="CompressorBandControls.h" compile="0" resource="0"
+              file="Source/CompressorBandControls.h"/>
+        <FILE id="jRukMj" name="CustomButtons.cpp" compile="1" resource="0"
+              file="Source/CustomButtons.cpp"/>
+        <FILE id="jEADHz" name="CustomButtons.h" compile="0" resource="0" file="Source/CustomButtons.h"/>
+        <FILE id="JomOkf" name="FFTDataGenerator.h" compile="0" resource="0"
+              file="Source/FFTDataGenerator.h"/>
+        <FILE id="bmJ7LO" name="GlobalControls.cpp" compile="1" resource="0"
+              file="Source/GlobalControls.cpp"/>
+        <FILE id="v3MU0o" name="GlobalControls.h" compile="0" resource="0"
+              file="Source/GlobalControls.h"/>
+        <FILE id="LasRjN" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
+        <FILE id="mPkwZk" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
+        <FILE id="z1222p" name="PathProducer.cpp" compile="1" resource="0"
+              file="Source/PathProducer.cpp"/>
+        <FILE id="riGWij" name="PathProducer.h" compile="0" resource="0" file="Source/PathProducer.h"/>
+        <FILE id="WOlVLP" name="RotarySliderWithLabels.cpp" compile="1" resource="0"
+              file="Source/RotarySliderWithLabels.cpp"/>
+        <FILE id="ok767b" name="RotarySliderWithLabels.h" compile="0" resource="0"
+              file="Source/RotarySliderWithLabels.h"/>
+        <FILE id="Vg0Soo" name="SpectrumAnalyzer.cpp" compile="1" resource="0"
+              file="Source/SpectrumAnalyzer.cpp"/>
+        <FILE id="YebNYy" name="SpectrumAnalyzer.h" compile="0" resource="0"
+              file="Source/SpectrumAnalyzer.h"/>
+        <FILE id="JgO37s" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+        <FILE id="NIng83" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
+        <FILE id="JlVtgi" name="UtilityComponents.cpp" compile="1" resource="0"
+              file="Source/UtilityComponents.cpp"/>
+        <FILE id="mmUHON" name="UtilityComponents.h" compile="0" resource="0"
+              file="Source/UtilityComponents.h"/>
+      </GROUP>
       <GROUP id="{D571EDC0-216C-454F-E588-922ADCF652D8}" name="DSP">
         <FILE id="dapi7S" name="SingleChannelSampleFifo.h" compile="0" resource="0"
               file="Source/SingleChannelSampleFifo.h"/>
