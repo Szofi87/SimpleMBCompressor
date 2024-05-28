@@ -25,7 +25,7 @@ struct ControlBar : juce::Component
 {
     ControlBar();
     void resized() override;
-    
+
     AnalyzerButton analyzerButton;
     PowerButton globalBypassButton;
 };
@@ -36,15 +36,15 @@ struct ControlBar : juce::Component
 
 /**
 */
-class SimpleMBCompAudioProcessorEditor  : public juce::AudioProcessorEditor,
-juce::Timer
+class SimpleMBCompAudioProcessorEditor : public juce::AudioProcessorEditor,
+    juce::Timer
 {
 public:
-    SimpleMBCompAudioProcessorEditor (SimpleMBCompAudioProcessor&);
+    SimpleMBCompAudioProcessorEditor(SimpleMBCompAudioProcessor&);
     ~SimpleMBCompAudioProcessorEditor() override;
 
     //==============================================================================
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
     void timerCallback() override;
@@ -53,18 +53,18 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     SimpleMBCompAudioProcessor& audioProcessor;
-    
+
     ControlBar controlBar;
-    GlobalControls globalControls { audioProcessor.apvts };
-    CompressorBandControls bandControls { audioProcessor.apvts };
-    SimpleMBComp::SpectrumAnalyzer analyzer { audioProcessor, audioProcessor.leftChannelFifo, audioProcessor.rightChannelFifo };
+    GlobalControls globalControls{ audioProcessor.apvts };
+    CompressorBandControls bandControls{ audioProcessor.apvts };
+    SimpleMBComp::SpectrumAnalyzer analyzer{ audioProcessor, audioProcessor.leftChannelFifo, audioProcessor.rightChannelFifo };
     std::unique_ptr<SimpleMBComp::MBCompAnalyzerOverlay> overlay;
-    
+
     void toggleGlobalBypassState();
-    
+
     std::array<juce::AudioParameterBool*, 3> getBypassParams();
-    
+
     void updateGlobalBypassButton();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleMBCompAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimpleMBCompAudioProcessorEditor)
 };
